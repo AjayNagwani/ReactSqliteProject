@@ -12,12 +12,13 @@ import ProductScreen from './components/ProductScreen';
 import ProductDetailsScreen from './components/ProductDetailsScreen';
 import ProductAddScreen from './components/ProductAddScreen';
 import ProductEditScreen from './components/ProductEditScreen';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer} from 'react-navigation';
+import { createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer,createSwitchNavigator } from 'react-navigation';
+import MigrationScreen from './components/MigrationScreen';
 
 const RootStack = createStackNavigator(
   {
-    Product : ProductScreen,
+    Product : MigrationScreen,
     ProductDetails : ProductDetailsScreen,
     AddProduct : ProductAddScreen,
     EditProduct : ProductEditScreen
@@ -35,8 +36,19 @@ const RootStack = createStackNavigator(
     },
   },
 );
-const RootContainer = createAppContainer(RootStack);
+const MigrationStack = createStackNavigator({ Migration : MigrationScreen });
+
+const RootContainer = createAppContainer(createSwitchNavigator(
+  {
+    Migration : MigrationScreen,
+    App : RootStack, 
+  },
+  {
+    initialRouteName: 'Migration',
+  }
+  ));
 export default class App extends React.Component {
+
   render(){
     return <RootContainer/>
   };
